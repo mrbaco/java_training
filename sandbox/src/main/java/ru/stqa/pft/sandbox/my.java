@@ -1,4 +1,4 @@
-package ru.testqa.my;
+package ru.stqa.pft.sandbox;
 
 public class my {
   public static void main(String[] args) {
