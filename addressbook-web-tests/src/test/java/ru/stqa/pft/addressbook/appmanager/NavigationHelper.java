@@ -17,4 +17,8 @@ public class NavigationHelper {
   public void openContactCreationForm() {
     wd.findElement(By.linkText("add new")).click();
   }
+
+  public void gotoContactPage() {
+    wd.findElement(By.linkText("home")).click();
+  }
 }

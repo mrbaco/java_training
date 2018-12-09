@@ -16,20 +16,40 @@ public class ContactHelper extends HelperBase {
 
   public void fillContactCreationForm(ContactData contactData) {
     type(By.name("firstname"), contactData.getFirstname());
-    type(By.name("middlename"), contactData.getFirstname());
-    type(By.name("lastname"), contactData.getFirstname());
-    type(By.name("nickname"), contactData.getFirstname());
-    type(By.name("title"), contactData.getFirstname());
-    type(By.name("company"), contactData.getFirstname());
-    type(By.name("address"), contactData.getFirstname());
-    type(By.name("mobile"), contactData.getFirstname());
-    type(By.name("email"), contactData.getFirstname());
-    type(By.name("homepage"), contactData.getFirstname());
-    type(By.name("address"), contactData.getFirstname());
-    type(By.name("byear"), contactData.getFirstname());
-    type(By.name("notes"), contactData.getFirstname());
+    type(By.name("middlename"), contactData.getMiddlename());
+    type(By.name("lastname"), contactData.getLastname());
+    type(By.name("nickname"), contactData.getNickname());
+    type(By.name("title"), contactData.getTitle());
+    type(By.name("company"), contactData.getCompany());
+    type(By.name("address"), contactData.getAddress());
+    type(By.name("mobile"), contactData.getMobile());
+    type(By.name("email"), contactData.getEmail());
+    type(By.name("homepage"), contactData.getHomepage());
+    type(By.name("address"), contactData.getAddress());
+    type(By.name("byear"), contactData.getByear());
+    type(By.name("notes"), contactData.getNotes());
 
     new Select(wd.findElement(By.name("bday"))).selectByVisibleText(contactData.getBday());
     new Select(wd.findElement(By.name("bmonth"))).selectByVisibleText(contactData.getBmonth());
+  }
+
+  public void selectContact() {
+    click(By.name("selected[]"));
+  }
+
+  public void deleteSelectedContacts() {
+    click(By.xpath("//input[@value='Delete']"));
+  }
+
+  public void approveDeletion() {
+    wd.switchTo().alert().accept();
+  }
+
+  public void initContactModification() {
+    click(By.xpath("//table/tbody/tr[2]/td[8]/a"));
+  }
+
+  public void submitContactModificationForm() {
+    click(By.xpath("//div[@id='content']/form/input[22]"));
   }
 }
