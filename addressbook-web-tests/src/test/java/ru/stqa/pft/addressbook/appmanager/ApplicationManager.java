@@ -22,8 +22,8 @@ public class ApplicationManager {
   }
 
   public void init() {
-    if (browser == BrowserType.FIREFOX) wd = new FirefoxDriver();
-    else if (browser == BrowserType.CHROME) wd = new ChromeDriver();
+    if (browser.equals(BrowserType.FIREFOX)) wd = new FirefoxDriver();
+    else if (browser.equals(BrowserType.CHROME)) wd = new ChromeDriver();
     else wd = new InternetExplorerDriver();
 
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
