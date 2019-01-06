@@ -26,7 +26,7 @@ public class ApplicationManager {
     else if (browser.equals(BrowserType.CHROME)) wd = new ChromeDriver();
     else wd = new InternetExplorerDriver();
 
-    wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     wd.get("http://localhost/");
 
     groupHelper = new GroupHelper(wd);
