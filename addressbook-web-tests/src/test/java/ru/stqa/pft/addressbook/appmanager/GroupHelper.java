@@ -9,10 +9,6 @@ public class GroupHelper extends HelperBase {
     super(wd);
   }
 
-  public void returnToGroupCreationPage() {
-    click(By.linkText("group page"));
-  }
-
   public void submitGroupCreationForm() {
     click(By.name("submit"));
   }
@@ -47,6 +43,5 @@ public class GroupHelper extends HelperBase {
     initGroupCreation();
     fillGroupCreationForm(group);
     submitGroupCreationForm();
-    returnToGroupCreationPage();
   }
 }

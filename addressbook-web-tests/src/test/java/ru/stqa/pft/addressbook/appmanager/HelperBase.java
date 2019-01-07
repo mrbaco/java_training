@@ -13,6 +13,7 @@ public class HelperBase {
 
   public void type(By locator, String text) {
     click(locator);
+
     if (text != null) {
       String existingText = wd.findElement(locator).getAttribute("value");
       if (!existingText.equals(text)) {

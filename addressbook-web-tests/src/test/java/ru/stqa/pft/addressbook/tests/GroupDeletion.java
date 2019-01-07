@@ -9,9 +9,10 @@ public class GroupDeletion extends TestBase {
     app.getNavigationHelper().gotoGroupsPage();
     if (!app.getGroupHelper().isThereAnySelect()) {
       app.getGroupHelper().createGroup(new GroupData("new group", "header of new group", "footer of new group"));
+      app.getNavigationHelper().gotoGroupsPage();
     }
     app.getGroupHelper().selectGroup();
     app.getGroupHelper().deleteSelectedGroups();
-    app.getGroupHelper().returnToGroupCreationPage();
+    app.getNavigationHelper().gotoGroupsPage();
   }
 }

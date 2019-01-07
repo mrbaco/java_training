@@ -18,6 +18,7 @@ public class NavigationHelper extends HelperBase {
     wd.findElement(By.linkText("groups")).click();
   }
 
+  // переход на домашнюю страницу = переход на страницу контактов
   public void gotoHomePage() {
     if (isElementPresent(By.id("maintable"))) {
       return;
