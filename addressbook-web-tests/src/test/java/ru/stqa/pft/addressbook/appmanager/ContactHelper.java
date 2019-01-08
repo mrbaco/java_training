@@ -1,10 +1,16 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
   public ContactHelper(WebDriver wd) {
@@ -40,10 +46,6 @@ public class ContactHelper extends HelperBase {
     }
   }
 
-  public void selectContact() {
-    click(By.name("selected[]"));
-  }
-
   public void deleteSelectedContacts() {
     click(By.xpath("//input[@value='Delete']"));
   }
@@ -52,8 +54,9 @@ public class ContactHelper extends HelperBase {
     wd.switchTo().alert().accept();
   }
 
-  public void initContactModification() {
-    click(By.xpath("//table/tbody/tr[2]/td[8]/a"));
+  public void initContactModification(int index) {
+    String id = wd.findElements(By.name("selected[]")).get(index).getAttribute("value");
+    wd.get("http://localhost/edit.php?id=" + id);
   }
 
   public void submitContactModificationForm() {
@@ -68,5 +71,31 @@ public class ContactHelper extends HelperBase {
     initContactCreation();
     fillContactForm(contact, creation);
     submitContactCreationForm();
+  }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<>();
+
+    WebElement table = wd.findElement(By.id("maintable"));
+    List<WebElement> elements = table.findElements(By.name("entry"));
+
+    if (elements.size() > 0) {
+      for (WebElement element : elements) {
+        List<WebElement> tds = element.findElements(By.tagName("td"));
+
+        int id = Integer.parseInt(tds.get(0).findElement(By.tagName("input")).getAttribute("value"));
+        String lastName = tds.get(1).getText();
+        String firstName = tds.get(2).getText();
+        String address = tds.get(3).getText();
+        String email = tds.get(4).getText();
+        String mobile = tds.get(5).getText();
+        String homepage = tds.get(9).getText();
+
+        ContactData contact = new ContactData(id, firstName, null, lastName, null, null, null, address, mobile, email, homepage, null, null, null, null, null);
+        contacts.add(contact);
+      }
+    }
+
+    return contacts;
   }
 }

@@ -20,9 +20,9 @@ public class NavigationHelper extends HelperBase {
 
   // переход на домашнюю страницу = переход на страницу контактов
   public void gotoHomePage() {
-    if (isElementPresent(By.id("maintable"))) {
-      return;
-    }
+    //if (isElementPresent(By.id("maintable"))) {
+    //  return;
+    //}
 
     wd.findElement(By.linkText("home")).click();
   }
