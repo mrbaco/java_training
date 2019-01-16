@@ -1,40 +1,34 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.*;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
-import java.util.Comparator;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreation extends TestBase {
 
   @Test
   public void testGroupCreation() throws Exception {
-    app.getNavigationHelper().gotoGroupsPage();
+    app.goTo().groupsPage();
 
-    List<GroupData> before = app.getGroupHelper().getGroupList();
+    Groups before = app.group().all();
 
     // тестовые данные
-    GroupData group = new GroupData("new group", "header of new group", "footer of new group");
+    GroupData group = new GroupData().withName("new group").
+                                      withHeader("header of new group").
+                                      withFooter("footer of new group");
 
-    app.getGroupHelper().createGroup(group);
-    app.getNavigationHelper().gotoGroupsPage();
+    app.group().create(group);
 
-    List<GroupData> after = app.getGroupHelper().getGroupList();
-
-    before.add(group);
+    Groups after = app.group().all();
 
     // проверка количества записей
-    Assert.assertEquals(after.size(), before.size());
+    assertThat(after.size(), equalTo(before.size() + 1));
 
     // проверка того, что была добавлена нужная запись
-    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-
-    before.sort(byId);
-    after.sort(byId);
-
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(
+            before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
   }
-
 }

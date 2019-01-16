@@ -1,39 +1,52 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactDeletion extends TestBase {
+  @BeforeMethod
+  public void ensurePreconditions() {
+    app.goTo().contactsPage();
+
+    if (!app.contact().isThereAnySelect()) {
+      app.contact().create(new ContactData().withFirstname("Denis").
+                                             withMiddlename("Olegovich").
+                                             withLastname("Sokolov").
+                                             withNickname("mrbaco").
+                                             withTitle("it is me, guys").
+                                             withCompany("Severstal").
+                                             withAddress("Cherepovets town").
+                                             withMobile("89000000000").
+                                             withEmail("mrbaco@ya.ru").
+                                             withHomepage("http://robotics-co.ru").
+                                             withBday("1").
+                                             withBmonth("December").
+                                             withByear("1993").
+                                             withGroup("test1").
+                                             withNotes("It is small note text!"), true);
+    }
+  }
+
   @Test
   public void testContactDeletion() {
-    app.getNavigationHelper().gotoHomePage();
-
-    if (!app.getContactHelper().isThereAnySelect()) {
-      app.getContactHelper().createContact(new ContactData("Denis", "Olegovich", "Sokolov", "mrbaco", "it is me, guys", "Severstal", "Cherepovets town", "89000000000", "mrbaco@ya.ru", "http://robotics-co.ru", "1", "December", "1993", "test1", "It is small note text!"), true);
-      app.getNavigationHelper().gotoHomePage();
-    }
-
-    List<ContactData> before = app.getContactHelper().getContactList();
+    Contacts before = app.contact().all();
 
     // тестовые данные
-    int entryToRemove = before.size() - 1;
+    ContactData deletedContact = before.iterator().next();
 
-    app.getContactHelper().selectElement(entryToRemove);
-    app.getContactHelper().deleteSelectedContacts();
-    app.getContactHelper().approveDeletion();
-    app.getNavigationHelper().gotoHomePage();
+    app.contact().delete(deletedContact);
 
-    List<ContactData> after = app.getContactHelper().getContactList();
-
-    before.remove(entryToRemove);
+    Contacts after = app.contact().all();
 
     // проверка количества записей
-    Assert.assertEquals(after.size(), before.size());
+    assertThat(after.size(), equalTo(before.size() - 1));
 
     // проверка того, что была удалена действительно нужная запись
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(before.without(deletedContact)));
   }
 }

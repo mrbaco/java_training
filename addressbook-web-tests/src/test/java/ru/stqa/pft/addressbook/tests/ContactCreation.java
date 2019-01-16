@@ -1,39 +1,45 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.Comparator;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreation extends TestBase {
   @Test
   public void testContactCreation() throws Exception {
-    app.getNavigationHelper().gotoHomePage();
+    app.goTo().contactsPage();
 
-    List<ContactData> before = app.getContactHelper().getContactList();
+    Contacts before = app.contact().all();
 
     // тестовые данные
-    ContactData contact = new ContactData("Denis", "Olegovich", "Sokolov", "mrbaco", "it is me, guys", "Severstal", "Cherepovets town", "89000000000", "mrbaco@ya.ru", "http://robotics-co.ru", "1", "December", "1993", "test1", "It is small note text!");
+    ContactData contact = new ContactData().withFirstname("Denis").
+                                            withMiddlename("Olegovich").
+                                            withLastname("Sokolov").
+                                            withNickname("mrbaco").
+                                            withTitle("it is me, guys").
+                                            withCompany("Severstal").
+                                            withAddress("Cherepovets town").
+                                            withMobile("89000000000").
+                                            withEmail("mrbaco@ya.ru").
+                                            withHomepage("http://robotics-co.ru").
+                                            withBday("1").
+                                            withBmonth("December").
+                                            withByear("1993").
+                                            withGroup("test1").
+                                            withNotes("It is small note text!");
 
-    app.getContactHelper().createContact(contact, true);
-    app.getNavigationHelper().gotoHomePage();
+    app.contact().create(contact, true);
 
-    List<ContactData> after = app.getContactHelper().getContactList();
-
-    before.add(contact);
+    Contacts after = app.contact().all();
 
     // проверка количества записей
-    Assert.assertEquals(after.size(), before.size());
+    assertThat(after.size(), equalTo(before.size() + 1));
 
     // проверка того, что была добавлена нужная запись
-    Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-
-    before.sort(byId);
-    after.sort(byId);
-
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(
+            before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
   }
 }

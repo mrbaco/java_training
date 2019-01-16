@@ -8,7 +8,7 @@ public class NavigationHelper extends HelperBase {
     super(wd);
   }
 
-  public void gotoGroupsPage() {
+  public void groupsPage() {
     if (isElementPresent(By.tagName("h1"))
             && wd.findElement(By.tagName("h1")).getText().equals("Groups")
             && isElementPresent(By.name("new"))) {
@@ -19,7 +19,7 @@ public class NavigationHelper extends HelperBase {
   }
 
   // переход на домашнюю страницу = переход на страницу контактов
-  public void gotoHomePage() {
+  public void contactsPage() {
     //if (isElementPresent(By.id("maintable"))) {
     //  return;
     //}

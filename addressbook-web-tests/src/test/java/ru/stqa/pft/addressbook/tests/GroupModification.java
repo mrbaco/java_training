@@ -1,49 +1,45 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
-import java.util.Comparator;
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupModification extends TestBase {
 
+  @BeforeMethod
+  public void ensurePreconditions() {
+    app.goTo().groupsPage();
+
+    if (app.group().all().size() == 0) {
+      app.group().create(new GroupData().withName("new group").
+                                         withHeader("header of new group").
+                                         withFooter("footer of new group"));
+    }
+  }
+
   @Test
   public void testGroupModification() {
-    app.getNavigationHelper().gotoGroupsPage();
-
-    if (!app.getGroupHelper().isThereAnySelect()) {
-      app.getGroupHelper().createGroup(new GroupData("new group", "header of new group", "footer of new group"));
-      app.getNavigationHelper().gotoGroupsPage();
-    }
-
-    List<GroupData> before = app.getGroupHelper().getGroupList();
+    Groups before = app.group().all();
 
     // тестовые данные
-    int entryToModify = 0;
-    GroupData dataToModify = new GroupData(before.get(entryToModify).getId(), "test1", "test2", "test3");
+    GroupData modifiedGroup = before.iterator().next();
+    GroupData group = new GroupData().withId(modifiedGroup.getId()).
+                                      withName("test1 modified").
+                                      withHeader("test2 modified").
+                                      withFooter("test3 modified");
 
-    app.getGroupHelper().selectElement(entryToModify);
-    app.getGroupHelper().initGroupModification();
-    app.getGroupHelper().fillGroupCreationForm(dataToModify);
-    app.getGroupHelper().submitGroupModificationForm();
-    app.getNavigationHelper().gotoGroupsPage();
+    app.group().modify(group);
 
-    List<GroupData> after = app.getGroupHelper().getGroupList();
-
-    before.remove(entryToModify);
-    before.add(dataToModify);
+    Groups after = app.group().all();
 
     // проверка количества записей
-    Assert.assertEquals(after.size(), before.size());
+    assertThat(after.size(), equalTo(before.size()));
 
     // проверка того, что была модифицирована нужная запись
-    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-
-    before.sort(byId);
-    after.sort(byId);
-
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
   }
 }

@@ -4,8 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GroupHelper extends HelperBase {
@@ -39,20 +39,38 @@ public class GroupHelper extends HelperBase {
     click(By.name("update"));
   }
 
-  public void createGroup(GroupData group) {
+  public void create(GroupData group) {
     initGroupCreation();
     fillGroupCreationForm(group);
     submitGroupCreationForm();
+    gotoGroupsPage();
   }
 
-  public List<GroupData> getGroupList() {
-    List<GroupData> groups = new ArrayList<>();
+  public void modify(GroupData group) {
+    clickToInputByValue(group.getId());
+    initGroupModification();
+    fillGroupCreationForm(group);
+    submitGroupModificationForm();
+    gotoGroupsPage();
+  }
+
+  public void delete(GroupData group) {
+    clickToInputByValue(group.getId());
+    deleteSelectedGroups();
+    gotoGroupsPage();
+  }
+
+  public void gotoGroupsPage() {
+    wd.findElement(By.linkText("groups")).click();
+  }
+
+  public Groups all() {
+    Groups groups = new Groups();
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
 
     for (WebElement element : elements) {
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-      GroupData group = new GroupData(id, element.getText(), null, null);
-      groups.add(group);
+      groups.add(new GroupData().withId(id).withName(element.getText()));
     }
 
     return groups;

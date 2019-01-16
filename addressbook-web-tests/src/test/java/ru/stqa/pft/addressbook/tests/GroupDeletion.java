@@ -1,38 +1,41 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
-import java.util.List;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupDeletion extends TestBase {
+
+  @BeforeMethod
+  public void ensurePreconditions() {
+    app.goTo().groupsPage();
+
+    if (app.group().all().size() == 0) {
+      app.group().create(new GroupData().withName("new group").
+                                         withHeader("header of new group").
+                                         withFooter("footer of new group"));
+    }
+  }
+
   @Test
   public void testGroupDeletion() throws Exception {
-    app.getNavigationHelper().gotoGroupsPage();
-
-    if (!app.getGroupHelper().isThereAnySelect()) {
-      app.getGroupHelper().createGroup(new GroupData("new group", "header of new group", "footer of new group"));
-      app.getNavigationHelper().gotoGroupsPage();
-    }
-
-    List<GroupData> before = app.getGroupHelper().getGroupList();
+    Groups before = app.group().all();
 
     // тестовые данные
-    int entryToRemove = before.size() - 1;
+    GroupData deletedGroup = before.iterator().next();
 
-    app.getGroupHelper().selectElement(entryToRemove);
-    app.getGroupHelper().deleteSelectedGroups();
-    app.getNavigationHelper().gotoGroupsPage();
+    app.group().delete(deletedGroup);
 
-    List<GroupData> after = app.getGroupHelper().getGroupList();
-
-    before.remove(entryToRemove);
+    Groups after = app.group().all();
 
     // проверка количества записей
-    Assert.assertEquals(after.size(), before.size());
+    assertThat(after.size(), equalTo(before.size() - 1));
 
     // проверка того, что была удалена действительно нужная запись
-    Assert.assertEquals(before, after);
+    assertThat(after, equalTo(before.without(deletedGroup)));
   }
 }

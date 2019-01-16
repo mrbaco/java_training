@@ -40,11 +40,7 @@ public class HelperBase {
     return isElementPresent(By.name("selected[]"));
   }
 
-  public int getSelectCount() {
-    return wd.findElements(By.name("selected[]")).size();
-  }
-
-  public void selectElement(int index) {
-    wd.findElements(By.name("selected[]")).get(index).click();
+  public void clickToInputByValue(int id) {
+    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
 }
