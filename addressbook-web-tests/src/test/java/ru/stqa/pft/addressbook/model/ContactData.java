@@ -2,6 +2,7 @@ package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
   private int id = Integer.MAX_VALUE;
+
   private String firstname;
   private String middlename;
   private String lastname;
@@ -9,8 +10,14 @@ public class ContactData {
   private String title;
   private String company;
   private String address;
+  private String home;
   private String mobile;
-  private String email;
+  private String work;
+  private String allPhones;
+  private String email1;
+  private String email2;
+  private String email3;
+  private String allEmails;
   private String homepage;
   private String bday;
   private String bmonth;
@@ -53,13 +60,43 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withMobile(String mobile) {
-    this.mobile = mobile;
+  public ContactData withHomePhone(String phone) {
+    this.home = phone;
     return this;
   }
 
-  public ContactData withEmail(String email) {
-    this.email = email;
+  public ContactData withMobilePhone(String phone) {
+    this.mobile = phone;
+    return this;
+  }
+
+  public ContactData withWorkPhone(String phone) {
+    this.work = phone;
+    return this;
+  }
+
+  public ContactData withAllPhones(String allPhones) {
+    this.allPhones = allPhones;
+    return this;
+  }
+
+  public ContactData withEmail1(String email) {
+    this.email1 = email;
+    return this;
+  }
+
+  public ContactData withEmail2(String email2) {
+    this.email2 = email2;
+    return this;
+  }
+
+  public ContactData withEmail3(String email3) {
+    this.email3 = email3;
+    return this;
+  }
+
+  public ContactData withAllEmails(String allEmails) {
+    this.allEmails = allEmails;
     return this;
   }
 
@@ -130,12 +167,36 @@ public class ContactData {
     return address;
   }
 
-  public String getMobile() {
+  public String getHomePhone() {
+    return home;
+  }
+
+  public String getMobilePhone() {
     return mobile;
   }
 
-  public String getEmail() {
-    return email;
+  public String getWorkPhone() {
+    return work;
+  }
+
+  public String getAllPhones() {
+    return allPhones;
+  }
+
+  public String getEmail1() {
+    return email1;
+  }
+
+  public String getEmail3() {
+    return email3;
+  }
+
+  public String getEmail2() {
+    return email2;
+  }
+
+  public String getAllEmails() {
+    return allEmails;
   }
 
   public String getHomepage() {

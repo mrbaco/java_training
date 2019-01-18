@@ -30,10 +30,10 @@ public class GroupDeletion extends TestBase {
 
     app.group().delete(deletedGroup);
 
-    Groups after = app.group().all();
-
     // проверка количества записей
-    assertThat(after.size(), equalTo(before.size() - 1));
+    assertThat(app.group().count(), equalTo(before.size() - 1));
+
+    Groups after = app.group().all();
 
     // проверка того, что была удалена действительно нужная запись
     assertThat(after, equalTo(before.without(deletedGroup)));

@@ -34,10 +34,10 @@ public class GroupModification extends TestBase {
 
     app.group().modify(group);
 
-    Groups after = app.group().all();
-
     // проверка количества записей
-    assertThat(after.size(), equalTo(before.size()));
+    assertThat(app.group().count(), equalTo(before.size()));
+
+    Groups after = app.group().all();
 
     // проверка того, что была модифицирована нужная запись
     assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));

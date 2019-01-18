@@ -22,10 +22,10 @@ public class GroupCreation extends TestBase {
 
     app.group().create(group);
 
-    Groups after = app.group().all();
-
     // проверка количества записей
-    assertThat(after.size(), equalTo(before.size() + 1));
+    assertThat(app.group().count(), equalTo(before.size() + 1));
+
+    Groups after = app.group().all();
 
     // проверка того, что была добавлена нужная запись
     assertThat(after, equalTo(

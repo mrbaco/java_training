@@ -22,8 +22,8 @@ public class ContactCreation extends TestBase {
                                             withTitle("it is me, guys").
                                             withCompany("Severstal").
                                             withAddress("Cherepovets town").
-                                            withMobile("89000000000").
-                                            withEmail("mrbaco@ya.ru").
+                                            withMobilePhone("89000000000").
+                                            withEmail1("mrbaco@ya.ru").
                                             withHomepage("http://robotics-co.ru").
                                             withBday("1").
                                             withBmonth("December").
@@ -33,10 +33,10 @@ public class ContactCreation extends TestBase {
 
     app.contact().create(contact, true);
 
-    Contacts after = app.contact().all();
-
     // проверка количества записей
-    assertThat(after.size(), equalTo(before.size() + 1));
+    assertThat(app.contact().count(), equalTo(before.size() + 1));
+
+    Contacts after = app.contact().all();
 
     // проверка того, что была добавлена нужная запись
     assertThat(after, equalTo(

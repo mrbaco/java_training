@@ -21,8 +21,8 @@ public class ContactModification extends TestBase {
                                              withTitle("it is me, guys").
                                              withCompany("Severstal").
                                              withAddress("Cherepovets town").
-                                             withMobile("89000000000").
-                                             withEmail("mrbaco@ya.ru").
+                                             withMobilePhone("89000000000").
+                                             withEmail1("mrbaco@ya.ru").
                                              withHomepage("http://robotics-co.ru").
                                              withBday("1").
                                              withBmonth("December").
@@ -46,8 +46,8 @@ public class ContactModification extends TestBase {
                                             withTitle("it is me, guys").
                                             withCompany("Severstal").
                                             withAddress("Cherepovets town").
-                                            withMobile("89000000000").
-                                            withEmail("fra777@pochta.ru").
+                                            withMobilePhone("89000000000").
+                                            withEmail1("fra777@pochta.ru").
                                             withHomepage("http://sk-grand.ru").
                                             withBday("19").
                                             withBmonth("March").
@@ -57,10 +57,10 @@ public class ContactModification extends TestBase {
 
     app.contact().modify(contact);
 
-    Contacts after = app.contact().all();
-
     // проверка количества записей
-    assertThat(after.size(), equalTo(before.size()));
+    assertThat(app.contact().count(), equalTo(before.size()));
+
+    Contacts after = app.contact().all();
 
     // проверка того, что была модифицирована нужная запись
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
