@@ -7,7 +7,6 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,8 +37,6 @@ public class GroupCreation extends TestBase {
 
   @DataProvider
   public Iterator<Object[]> validGroupsFromJson() throws IOException {
-    List<Object[]> list = new ArrayList<>();
-
     String json = "";
 
     BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/groups.json"));
