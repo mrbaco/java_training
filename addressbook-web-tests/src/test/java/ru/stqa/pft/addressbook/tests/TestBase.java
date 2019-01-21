@@ -6,7 +6,7 @@ import org.testng.annotations.AfterSuite;
 import ru.stqa.pft.addressbook.appmanager.ApplicationManager;
 
 public class TestBase {
-  protected static final ApplicationManager app = new ApplicationManager(BrowserType.FIREFOX);
+  protected static final ApplicationManager app = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
 
   @BeforeSuite
   public void setUp() throws Exception {

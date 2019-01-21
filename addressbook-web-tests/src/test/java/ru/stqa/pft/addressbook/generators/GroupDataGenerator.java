@@ -55,19 +55,17 @@ public class GroupDataGenerator {
     Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
     String json = gson.toJson(groups);
 
-    Writer writer = new FileWriter(file);
-    writer.write(json);
-    writer.close();
+    try (Writer writer = new FileWriter(file)) {
+      writer.write(json);
+    }
   }
 
   private void save(List<GroupData> groups, File file) throws IOException {
-    Writer writer = new FileWriter(file);
-
-    for (GroupData g : groups) {
-      writer.write(String.format("%s;%s;%s\n", g.getName(), g.getHeader(), g.getFooter()));
+    try (Writer writer = new FileWriter(file)) {
+      for (GroupData g : groups) {
+        writer.write(String.format("%s;%s;%s\n", g.getName(), g.getHeader(), g.getFooter()));
+      }
     }
-
-    writer.close();
   }
 
   private List<GroupData> generateGroups(int count) {

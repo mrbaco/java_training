@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.stqa.pft.addressbook.tests.ContactDeletion" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-01-20T23:50:36" hostname="LAPTOP-LMQOUC8I" time="11.479">
+  <properties/>
+  <testcase name="testContactDeletion" classname="ru.stqa.pft.addressbook.tests.ContactDeletion" time="11.479"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

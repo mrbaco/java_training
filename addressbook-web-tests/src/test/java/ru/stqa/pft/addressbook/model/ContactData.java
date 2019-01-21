@@ -186,7 +186,7 @@ public class ContactData {
   }
 
   public File getPhoto() {
-    if (photo == null) {
+    if (photo == null && photoAsString != null) {
       photo = new File(photoAsString);
     }
 
