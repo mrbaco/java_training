@@ -18,7 +18,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreation extends TestBase {
-
   @DataProvider
   public Iterator<Object[]> validGroupsFromCSV() throws IOException {
     List<Object[]> list = new ArrayList<>();
