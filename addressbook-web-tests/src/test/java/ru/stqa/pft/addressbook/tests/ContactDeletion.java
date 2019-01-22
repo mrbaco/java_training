@@ -13,7 +13,7 @@ public class ContactDeletion extends TestBase {
   public void ensurePreconditions() {
     app.goTo().contactsPage();
 
-    if (!app.contact().isThereAnySelect()) {
+    if (app.db().contacts().size() == 0) {
       app.contact().create(new ContactData().withFirstname("Denis").
                                              withMiddlename("Olegovich").
                                              withLastname("Sokolov").
@@ -34,7 +34,7 @@ public class ContactDeletion extends TestBase {
 
   @Test
   public void testContactDeletion() {
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
 
     // тестовые данные
     ContactData deletedContact = before.iterator().next();
@@ -44,7 +44,7 @@ public class ContactDeletion extends TestBase {
     // проверка количества записей
     assertThat(app.contact().count(), equalTo(before.size() - 1));
 
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
 
     // проверка того, что была удалена действительно нужная запись
     assertThat(after, equalTo(before.without(deletedContact)));

@@ -57,14 +57,14 @@ public class GroupCreation extends TestBase {
   public void testGroupCreation(GroupData group) throws Exception {
     app.goTo().groupsPage();
 
-    Groups before = app.group().all();
+    Groups before = app.db().groups();
 
     app.group().create(group);
 
     // проверка количества записей
     assertThat(app.group().count(), equalTo(before.size() + 1));
 
-    Groups after = app.group().all();
+    Groups after = app.db().groups();
 
     // проверка того, что была добавлена нужная запись
     assertThat(after, equalTo(

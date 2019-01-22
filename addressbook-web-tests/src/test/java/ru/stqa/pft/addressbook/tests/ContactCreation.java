@@ -42,14 +42,14 @@ public class ContactCreation extends TestBase {
   public void testContactCreation(ContactData contact) throws Exception {
     app.goTo().contactsPage();
 
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
 
     app.contact().create(contact, true);
 
     // проверка количества записей
     assertThat(app.contact().count(), equalTo(before.size() + 1));
 
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
 
     // проверка того, что была добавлена нужная запись
     assertThat(after, equalTo(
