@@ -48,5 +48,6 @@ public class ContactDeletion extends TestBase {
 
     // проверка того, что была удалена действительно нужная запись
     assertThat(after, equalTo(before.without(deletedContact)));
+    verifyContactsListInUI();
   }
 }

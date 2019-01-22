@@ -54,5 +54,6 @@ public class ContactCreation extends TestBase {
     // проверка того, что была добавлена нужная запись
     assertThat(after, equalTo(
             before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+    verifyContactsListInUI();
   }
 }

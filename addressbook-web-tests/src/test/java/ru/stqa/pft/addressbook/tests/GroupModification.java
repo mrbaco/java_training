@@ -41,5 +41,6 @@ public class GroupModification extends TestBase {
 
     // проверка того, что была модифицирована нужная запись
     assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
+    verifyGroupsListInUI();
   }
 }

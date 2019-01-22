@@ -64,5 +64,6 @@ public class ContactModification extends TestBase {
 
     // проверка того, что была модифицирована нужная запись
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
+    verifyContactsListInUI();
   }
 }

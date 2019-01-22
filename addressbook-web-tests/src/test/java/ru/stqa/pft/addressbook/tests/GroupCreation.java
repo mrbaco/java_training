@@ -69,5 +69,6 @@ public class GroupCreation extends TestBase {
     // проверка того, что была добавлена нужная запись
     assertThat(after, equalTo(
             before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+    verifyGroupsListInUI();
   }
 }

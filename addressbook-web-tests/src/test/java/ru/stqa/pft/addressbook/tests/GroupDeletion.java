@@ -37,5 +37,6 @@ public class GroupDeletion extends TestBase {
 
     // проверка того, что была удалена действительно нужная запись
     assertThat(after, equalTo(before.without(deletedGroup)));
+    verifyGroupsListInUI();
   }
 }
