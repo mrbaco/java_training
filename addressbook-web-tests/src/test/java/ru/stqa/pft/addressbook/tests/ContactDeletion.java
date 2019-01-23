@@ -27,7 +27,6 @@ public class ContactDeletion extends TestBase {
                                              withBday("1").
                                              withBmonth("December").
                                              withByear("1993").
-                                             withGroup("test1").
                                              withNotes("It is small note text!"), true);
     }
   }

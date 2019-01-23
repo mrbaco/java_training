@@ -6,6 +6,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -40,9 +42,17 @@ public class ContactCreation extends TestBase {
 
   @Test(dataProvider = "validContactsFromJson")
   public void testContactCreation(ContactData contact) throws Exception {
-    app.goTo().contactsPage();
-
     Contacts before = app.db().contacts();
+
+    // проверяем, существует ли группа для нового контакта. Если нет - создаем
+    String checkGroupName = contact.getGroups().iterator().next().getName();
+
+    if (!app.db().isGroup(checkGroupName)) {
+      app.goTo().groupsPage();
+      app.group().create(new GroupData().withName(checkGroupName).withHeader("auto group head").withFooter("auto group foot"));
+    }
+
+    app.goTo().contactsPage();
 
     app.contact().create(contact, true);
 

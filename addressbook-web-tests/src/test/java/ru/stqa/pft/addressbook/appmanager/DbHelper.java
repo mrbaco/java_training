@@ -35,6 +35,18 @@ public class DbHelper {
     return new Groups(result);
   }
 
+  public Boolean isGroup(String name) {
+    Session session = sessionFactory.openSession();
+
+    session.beginTransaction();
+    List<GroupData> result = session.createQuery(String.format("from GroupData where name = '%s'", name)).list();
+    session.getTransaction().commit();
+
+    session.close();
+
+    return result.size() > 0;
+  }
+
   public Contacts contacts() {
     Session session = sessionFactory.openSession();
 

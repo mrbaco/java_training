@@ -5,6 +5,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "addressbook")
@@ -83,10 +85,6 @@ public class ContactData {
   @Expose
   private String byear;
 
-  @Transient
-  @Expose
-  private String group;
-
   @Type(type = "text")
   @Expose
   private String notes;
@@ -98,6 +96,12 @@ public class ContactData {
 
   @Transient
   private File photo;
+
+  @Expose
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "address_in_groups",
+          joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups = new HashSet<>();
 
   public ContactData withFirstname(String firstname) {
     this.firstname = firstname;
@@ -191,11 +195,6 @@ public class ContactData {
 
   public ContactData withByear(String byear) {
     this.byear = byear;
-    return this;
-  }
-
-  public ContactData withGroup(String group) {
-    this.group = group;
     return this;
   }
 
@@ -311,8 +310,8 @@ public class ContactData {
     return notes;
   }
 
-  public String getGroup() {
-    return group;
+  public Groups getGroups() {
+    return new Groups(groups);
   }
 
   @Override
@@ -330,12 +329,6 @@ public class ContactData {
     if (title != null ? !title.equals(that.title) : that.title != null) return false;
     if (company != null ? !company.equals(that.company) : that.company != null) return false;
     if (address != null ? !address.equals(that.address) : that.address != null) return false;
-    //if (home != null ? !home.equals(that.home) : that.home != null) return false;
-    //if (mobile != null ? !mobile.equals(that.mobile) : that.mobile != null) return false;
-    //if (work != null ? !work.equals(that.work) : that.work != null) return false;
-    //if (email1 != null ? !email1.equals(that.email1) : that.email1 != null) return false;
-    //if (email2 != null ? !email2.equals(that.email2) : that.email2 != null) return false;
-    //if (email3 != null ? !email3.equals(that.email3) : that.email3 != null) return false;
     if (homepage != null ? !homepage.equals(that.homepage) : that.homepage != null) return false;
     return notes != null ? notes.equals(that.notes) : that.notes == null;
   }
@@ -368,5 +361,10 @@ public class ContactData {
             ", firstname='" + firstname + '\'' +
             ", lastname='" + lastname + '\'' +
             '}';
+  }
+
+  public ContactData withGroup(GroupData group) {
+    this.groups.add(group);
+    return this;
   }
 }

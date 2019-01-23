@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -96,8 +97,8 @@ public class ContactDataGenerator {
                                      withBday("1").
                                      withBmonth("December").
                                      withByear("1993").
-                                     withGroup("test1").
-                                     withNotes("It is small note text!"));
+                                     withNotes("It is small note text!").
+                                     withGroup(new GroupData().withName("Denis's friends group")));
     }
 
     return contacts;

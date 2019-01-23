@@ -1,38 +1,46 @@
 [
   {
-    "firstname": "Denis",
+    "firstname": "Pavel",
+    "middlename": "Olegovich",
+    "lastname": "Konovalov",
+    "nickname": "mrbaco",
+    "title": "it is me, guys",
+    "company": "Severstal",
+    "address": "Cherepovets, Tonshalovo",
+    "mobile": "222-22-22-22",
+    "email1": "mrbaco@ya.ru",
+    "homepage": "http://robotics-co.ru",
+    "bday": "1",
+    "bmonth": "December",
+    "byear": "1993",
+    "notes": "It is small note text!",
+    "photoAsString": "src/test/resources/2.jpg",
+    "groups": [
+      {
+        "name": "Denis friends group"
+      }
+    ]
+  },
+  {
+    "firstname": "Pavel",
     "middlename": "Sergeevich",
     "lastname": "Abakumov",
     "nickname": "fra",
     "title": "it is me, guys",
     "company": "Severstal",
-    "address": "Cherepovets, Montkler",
-    "mobile": "111-11-11-11",
+    "address": "Cherepovets, Tonshalovo",
+    "mobile": "333-33-33-33",
     "email1": "max.abakumov1995@yandex.ru",
     "homepage": "http://robotics-co.ru",
     "bday": "1",
     "bmonth": "December",
     "byear": "1993",
-    "group": "test1",
     "notes": "It is small note text!",
-    "photoAsString": "src/test/resources/1.jpg"
-  },
-  {
-    "firstname": "Pavel",
-    "middlename": "Sergeevich",
-    "lastname": "Konovalov",
-    "nickname": "fra",
-    "title": "it is me, guys",
-    "company": "Severstal",
-    "address": "Cherepovets, Tonshalovo",
-    "mobile": "111-11-11-11",
-    "email1": "fra000@pochta.ru",
-    "homepage": "http://robotics-co.ru",
-    "bday": "1",
-    "bmonth": "December",
-    "byear": "1993",
-    "group": "test1",
-    "notes": "It is small note text!",
-    "photoAsString": "src/test/resources/3.jpg"
+    "photoAsString": "src/test/resources/2.jpg",
+    "groups": [
+      {
+        "name": "Denis friends group"
+      }
+    ]
   }
 ]
