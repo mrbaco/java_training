@@ -330,8 +330,6 @@ public class ContactData {
     if (title != null ? !title.equals(that.title) : that.title != null) return false;
     if (company != null ? !company.equals(that.company) : that.company != null) return false;
     if (address != null ? !address.equals(that.address) : that.address != null) return false;
-    if (allPhones != null ? !allPhones.equals(that.allPhones) : that.allPhones != null) return false;
-    if (allEmails != null ? !allEmails.equals(that.allEmails) : that.allEmails != null) return false;
     //if (home != null ? !home.equals(that.home) : that.home != null) return false;
     //if (mobile != null ? !mobile.equals(that.mobile) : that.mobile != null) return false;
     //if (work != null ? !work.equals(that.work) : that.work != null) return false;
