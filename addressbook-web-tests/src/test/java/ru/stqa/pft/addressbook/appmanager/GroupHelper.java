@@ -85,4 +85,13 @@ public class GroupHelper extends HelperBase {
 
     return new Groups(groupCache);
   }
+
+  public String createRandomGroup() {
+    String groupName = "Random Group #" + Integer.toString(1000000 + (int) (Math.random() * 9999999));
+
+    gotoGroupsPage();
+    create(new GroupData().withName(groupName).withHeader("auto group head").withFooter("auto group foot"));
+
+    return groupName;
+  }
 }

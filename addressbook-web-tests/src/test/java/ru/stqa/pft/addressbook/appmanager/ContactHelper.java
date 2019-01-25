@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
 
@@ -176,5 +178,47 @@ public class ContactHelper extends HelperBase {
                              withBmonth(bmonth).
                              withByear(byear).
                              withNotes(notes);
+  }
+
+  public boolean isContactInGroup(Contacts contactsList, ContactData modifiedContact, String groupName) {
+    for (ContactData c : contactsList) {
+      if (c.getId() == modifiedContact.getId()) {
+        for (GroupData g : c.getGroups()) {
+          if (g.getName().equals(groupName)) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  public String findUnattachedGroup(Groups contactGroups, Groups groupsList) {
+    if (contactGroups.size() == 0) return groupsList.iterator().next().getName();
+
+    for (GroupData g : groupsList) {
+      for (GroupData currentContactsGroup : contactGroups) {
+        if (!g.getName().equals(currentContactsGroup.getName())) {
+          return g.getName();
+        }
+      }
+    }
+
+    return "";
+  }
+
+  public void addToGroup(ContactData modifiedContact, String groupName) {
+    wd.findElement(By.id(Integer.toString(modifiedContact.getId()))).click();
+    new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(groupName);
+    wd.findElement(By.name("add")).click();
+    contactsPage();
+  }
+
+  public void deleteFromGroup(ContactData modifiedContact, String groupName) {
+    new Select(wd.findElement(By.name("group"))).selectByVisibleText(groupName);
+    wd.findElement(By.id(Integer.toString(modifiedContact.getId()))).click();
+    wd.findElement(By.name("remove")).click();
+    contactsPage();
   }
 }
