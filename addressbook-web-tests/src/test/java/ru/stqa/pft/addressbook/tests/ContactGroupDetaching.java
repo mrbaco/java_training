@@ -59,17 +59,18 @@ public class ContactGroupDetaching extends TestBase {
       Groups groupsList = app.db().groups();
 
       // если группы отсутствуют - создаем одну
-      if (groupsList.size() == 0) groupName = app.group().createRandomGroup();
-      else groupName = groupsList.iterator().next().getName();
+      if (groupsList.size() == 0) {
+        groupName = app.group().createRandomGroup();
+
+        // переходим на страницу с контактами
+        app.goTo().contactsPage();
+      } else groupName = groupsList.iterator().next().getName();
 
       modifiedContact = contactsList.iterator().next();
       app.contact().addToGroup(modifiedContact, groupName);
 
       modifiedContact.withGroup(new GroupData().withName(groupName));
     }
-
-    // переходим на страницу с контактами
-    app.goTo().contactsPage();
 
     // удаляем групп
     app.contact().deleteFromGroup(modifiedContact, groupName);

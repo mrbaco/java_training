@@ -52,7 +52,7 @@ public class ContactGroupAttaching extends TestBase {
     // если контакту добавлено максимальное количество групп - добавляем новую и получаем ее имя для присвоения
     String groupName;
 
-    if (modifiedContact.getGroups().size() == groupsList.size() || groupsList.size() == 0) {
+    if (modifiedContact.getGroups().size() == groupsList.size()) {
       groupName = app.group().createRandomGroup();
     } else {
       // если еще есть группа, которая не присвоена контакту - получаем ее имя для присвоения
