@@ -15,8 +15,12 @@ import java.util.concurrent.TimeUnit;
 public class ApplicationManager {
   private final Properties properties;
 
-  public WebDriver wd;
+  private WebDriver wd;
   private String browser;
+
+  private RegistrationHelper registrationHelper;
+  private FtpHelper ftpHelper;
+  private MailHelper mailHelper;
 
   public ApplicationManager(String browser) {
     this.browser = browser;
@@ -26,16 +30,54 @@ public class ApplicationManager {
   public void init() throws IOException {
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-
-    if (browser.equals(BrowserType.FIREFOX)) wd = new FirefoxDriver();
-    else if (browser.equals(BrowserType.CHROME)) wd = new ChromeDriver();
-    else wd = new InternetExplorerDriver();
-
-    wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    wd.get(properties.getProperty("web.baseURL"));
   }
 
   public void stop() {
-    wd.quit();
+    if (wd != null) wd.quit();
+  }
+
+  public HttpSession newSession() {
+    return new HttpSession(this);
+  }
+
+  public String getProperty(String key) {
+    return properties.getProperty(key);
+  }
+
+  public RegistrationHelper registration() {
+    if (registrationHelper == null) {
+      registrationHelper = new RegistrationHelper(this);
+    }
+
+    return registrationHelper;
+  }
+
+  public FtpHelper ftp() {
+    if (ftpHelper == null) {
+      ftpHelper = new FtpHelper(this);
+    }
+
+    return ftpHelper;
+  }
+
+  public WebDriver getDriver() {
+    if (wd == null) {
+      if (browser.equals(BrowserType.FIREFOX)) wd = new FirefoxDriver();
+      else if (browser.equals(BrowserType.CHROME)) wd = new ChromeDriver();
+      else wd = new InternetExplorerDriver();
+
+      wd.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+      wd.get(properties.getProperty("web.baseURL"));
+    }
+
+    return wd;
+  }
+
+  public MailHelper mail() {
+    if (mailHelper == null) {
+      mailHelper = new MailHelper(this);
+    }
+
+    return mailHelper;
   }
 }
