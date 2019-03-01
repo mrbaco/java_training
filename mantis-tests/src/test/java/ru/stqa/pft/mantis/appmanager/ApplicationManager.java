@@ -18,7 +18,7 @@ public class ApplicationManager {
   private WebDriver wd;
   private String browser;
 
-  private RegistrationHelper registrationHelper;
+  private ProfileHelper registrationHelper;
   private FtpHelper ftpHelper;
   private MailHelper mailHelper;
 
@@ -44,9 +44,9 @@ public class ApplicationManager {
     return properties.getProperty(key);
   }
 
-  public RegistrationHelper registration() {
+  public ProfileHelper registration() {
     if (registrationHelper == null) {
-      registrationHelper = new RegistrationHelper(this);
+      registrationHelper = new ProfileHelper(this);
     }
 
     return registrationHelper;
