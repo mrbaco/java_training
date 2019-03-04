@@ -13,6 +13,8 @@ dependencies {
     implementation 'commons-net:commons-net:3.6'
     implementation 'org.subethamail:subethasmtp:3.1.7'
     implementation 'ru.lanwen.verbalregex:java-verbal-expressions:1.6'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.1.Final'
     testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.3.0-alpha4'
 }
 

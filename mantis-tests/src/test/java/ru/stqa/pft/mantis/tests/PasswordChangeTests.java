@@ -5,6 +5,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.mantis.appmanager.HttpSession;
 import ru.stqa.pft.mantis.model.MailMessage;
+import ru.stqa.pft.mantis.model.User;
+import ru.stqa.pft.mantis.model.Users;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -20,21 +22,16 @@ public class PasswordChangeTests extends TestBase {
 
   @Test
   public void testPasswordChange() throws IOException, MessagingException {
-    // создание пользователя, которому будем менять пароль
-    long now = System.currentTimeMillis();
+    // получаем список пользователей
+    Users users = app.db().users();
 
-    String email = String.format("user%s@localhost.localdomain", now);
-    String user = String.format("user%s", now);
-    String password = "password";
+    // выбор пользователя, которому будем менять пароль
+    User man = users.iterator().next();
+
+    String email = man.getEmail();
+    String user = man.getUsername();
+
     String newPassword = "newPassword";
-
-    app.registration().start(user, email);
-    List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
-
-    String confirmationLink = app.registration().findConfirmationLink(mailMessages, email);
-
-    app.registration().finish(confirmationLink, password);
-    app.registration().logout();
 
     // вход под администратором
     app.registration().login(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"));
@@ -46,8 +43,8 @@ public class PasswordChangeTests extends TestBase {
     app.registration().resetPassword();
 
     // получение почты
-    mailMessages = app.mail().waitForMail(2, 10000);
-    confirmationLink = app.registration().findConfirmationLink(mailMessages, email, true);
+    List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
+    String confirmationLink = app.registration().findConfirmationLink(mailMessages, email, true);
 
     // смена пароля
     app.registration().finish(confirmationLink, newPassword);
