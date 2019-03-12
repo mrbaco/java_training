@@ -16,9 +16,9 @@ public class PointTests {
     //Assert.assertEquals(p1.distance(p2), 0);
 
     // test true
-    Assert.assertEquals(p1.distance(p3), 1);
+    //Assert.assertEquals(p1.distance(p3), 1);
 
     // test false
-    //Assert.assertEquals(p1.distance(p3), 2);
+    Assert.assertEquals(p1.distance(p3), 2);
   }
 }
