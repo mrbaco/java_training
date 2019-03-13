@@ -10,7 +10,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -49,7 +48,7 @@ public class ApplicationManager {
       DesiredCapabilities capabilities = new DesiredCapabilities();
 
       capabilities.setBrowserName(browser);
-      capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win7")));
+      capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win10")));
 
       wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
     }
